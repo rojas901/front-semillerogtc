@@ -14,8 +14,11 @@ const Navbar = ({ auth, setAuth }) => {
             {
               auth ?
                 <NavLink
-                  className={e => e.isActive ? 'nav-item nav-link text-white' : 'nav-item nav-link text-primary'}
-                  onClick={() => setAuth(false)}
+                  className='nav-item nav-link text-primary'
+                  onClick={() => {
+                    setAuth(false)
+                    localStorage.removeItem('Authorization')
+                  }}
                 >
                   Logout
                 </NavLink>

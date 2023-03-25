@@ -17,7 +17,7 @@ const Login = ({setAuth}) => {
   const handleOnSubmit = async(e) => {
     try {
       e.preventDefault()
-      await loginService(user)
+      const res = await loginService(user)
       Swal.fire({
         icon: 'success',
         title: 'Bienvenido al sistema de gestion de usuarios',
@@ -28,6 +28,7 @@ const Login = ({setAuth}) => {
         email: "",
         password: ""
       })
+      localStorage.setItem('Authorization', res.data)
       setAuth(true)
     } catch (error) {
       console.log(error)

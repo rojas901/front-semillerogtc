@@ -102,7 +102,7 @@ const Registro = () => {
             </div>
             <div className="mb-3 col-3">
               <label htmlFor="accion" className="form-label">Accion</label>
-              <button className='btn btn-primary d-block w-100' type='button' onClick={agregarTelefono}>Agregar</button>
+              <button className='btn btn-secondary d-block w-100' type='button' onClick={agregarTelefono}>Agregar</button>
             </div>
           </div>
           {
