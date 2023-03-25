@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState } from 'react'
+import Swal from 'sweetalert2'
+import { registroService } from '../services/authServices'
 
 const Registro = () => {
 
@@ -19,30 +20,50 @@ const Registro = () => {
   const handleOnChange = (e) => {
     const { name, value } = e.target
     setUser({ ...user, [name]: value })
-    console.log(user)
   }
 
   const handleOnChangeTelefono = (e) => {
     const { name, value } = e.target
     setTelefono({ ...telefono, [name]: value })
-    console.log(telefono)
   }
 
   const agregarTelefono = () => {
     let arreglo = user.telefonos
     arreglo.push(telefono)
-    setUser({...user, telefonos: arreglo})
+    setUser({ ...user, telefonos: arreglo })
+    setTelefono({ number: 0, citycode: 0, countrycode: 0 })
   }
 
   const eliminarTelefono = (index) => {
-    console.log("eliminar", index)
     let arreglo = user.telefonos
     arreglo.splice(index, 1)
-    setUser({...user, telefonos: arreglo})
+    setUser({ ...user, telefonos: arreglo })
   }
 
-  const handleOnSubmit = () => {
-    setAuth(true)
+  const handleOnSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await registroService(user)
+      Swal.fire({
+        icon: 'success',
+        title: 'Se ha registrado con exito, vaya a login',
+        showConfirmButton: false,
+        timer: 4000
+      })
+      setUser({
+        nombre: "",
+        email: "",
+        password: "",
+        telefonos: []
+      })
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: `${error.request.response}`,
+        showConfirmButton: false,
+        timer: 4000
+      });
+    }
   }
 
   return (
@@ -101,7 +122,7 @@ const Registro = () => {
                   <tbody>
                     {
                       user.telefonos.map((item, index) => {
-                        return(<tr key={index}>
+                        return (<tr key={index}>
                           <th scope="row">{index}</th>
                           <td>{item.number}</td>
                           <td>{item.citycode}</td>
@@ -119,12 +140,7 @@ const Registro = () => {
               :
               null
           }
-          <div className="mb-3">
-            <Link to='/login'>
-              Ya esta registrado, login
-            </Link>
-          </div>
-          <button type="submit" className="btn btn-primary">Entrar</button>
+          <button type="submit" className="btn btn-primary">Registrarme</button>
         </form>
       </div>
     </>

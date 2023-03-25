@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import { loginService } from '../services/authServices'
 
 const Login = ({setAuth}) => {
   const [user, setUser] = useState({
@@ -13,8 +14,30 @@ const Login = ({setAuth}) => {
     console.log(user)
   }
 
-  const handleOnSubmit = () => {
-    setAuth(true)
+  const handleOnSubmit = async(e) => {
+    try {
+      e.preventDefault()
+      await loginService(user)
+      Swal.fire({
+        icon: 'success',
+        title: 'Bienvenido al sistema de gestion de usuarios',
+        showConfirmButton: false,
+        timer: 4000
+      })
+      setUser({
+        email: "",
+        password: ""
+      })
+      setAuth(true)
+    } catch (error) {
+      console.log(error)
+      Swal.fire({
+        icon: 'error',
+        title: `${error.request.response}`,
+        showConfirmButton: false,
+        timer: 4000
+      });
+    }
   }
 
   return (
@@ -32,11 +55,6 @@ const Login = ({setAuth}) => {
           <div>
           <input type="password" className="form-control" id="password" name='password' value={user.password} onChange={handleOnChange} required/>
           </div>          
-        </div>
-        <div className="mb-3">
-          <Link to='/registro'>
-            No tienes cuenta, registrate
-          </Link>
         </div>
         <button type="submit" className="btn btn-primary">Entrar</button>
       </form>
