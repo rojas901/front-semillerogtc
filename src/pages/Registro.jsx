@@ -42,27 +42,36 @@ const Registro = () => {
 
   const handleOnSubmit = async (e) => {
     e.preventDefault()
-    try {
-      await registroService(user)
-      Swal.fire({
-        icon: 'success',
-        title: 'Se ha registrado con exito, vaya a login',
-        showConfirmButton: false,
-        timer: 4000
-      })
-      setUser({
-        nombre: "",
-        email: "",
-        password: "",
-        telefonos: []
-      })
-    } catch (error) {
+    if (user.telefonos.length <= 0) {
       Swal.fire({
         icon: 'error',
-        title: `${error.request.response}`,
+        title: 'Agregar un telefono',
         showConfirmButton: false,
         timer: 4000
       });
+    } else {
+      try {
+        await registroService(user)
+        Swal.fire({
+          icon: 'success',
+          title: 'Se ha registrado con exito, vaya a login',
+          showConfirmButton: false,
+          timer: 4000
+        })
+        setUser({
+          nombre: "",
+          email: "",
+          password: "",
+          telefonos: []
+        })
+      } catch (error) {
+        Swal.fire({
+          icon: 'error',
+          title: `${error.request.response}`,
+          showConfirmButton: false,
+          timer: 4000
+        });
+      }
     }
   }
 
@@ -132,7 +141,6 @@ const Registro = () => {
                           }}>✖️</button></td>
                         </tr>)
                       })
-
                     }
                   </tbody>
                 </table>

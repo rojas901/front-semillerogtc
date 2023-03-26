@@ -11,7 +11,6 @@ const Login = ({setAuth}) => {
   const handleOnChange = (e) => {
     const {name, value} = e.target
     setUser({...user, [name]: value})
-    console.log(user)
   }
 
   const handleOnSubmit = async(e) => {
@@ -29,9 +28,8 @@ const Login = ({setAuth}) => {
         password: ""
       })
       localStorage.setItem('Authorization', res.data)
-      setAuth(true)
+      window.location.pathname='usuarios'
     } catch (error) {
-      console.log(error)
       Swal.fire({
         icon: 'error',
         title: `${error.request.response}`,

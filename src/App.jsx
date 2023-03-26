@@ -6,7 +6,8 @@ import AuthRouter from './Routers/AuthRouter'
 import UserRouter from './Routers/UserRouter'
 
 function App() {
-  const [auth, setAuth] = useState(false)
+
+  const [auth, setAuth] = useState(localStorage.getItem('Authorization') !== null)
 
   return (
     <BrowserRouter>
