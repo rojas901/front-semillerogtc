@@ -1,7 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
 
-const Navbar = ({ auth, setAuth }) => {
+const Navbar = ({ auth}) => {
   return (
     <nav className="navbar navbar-expand-lg bg-dark  d-flex justify-content-around">
       <div className="container-fluid">

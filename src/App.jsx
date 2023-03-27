@@ -9,15 +9,17 @@ function App() {
 
   const [auth, setAuth] = useState(localStorage.getItem('Authorization') !== null)
 
+  
+
   return (
     <BrowserRouter>
-      <Navbar auth={auth} setAuth={setAuth}/>
+      <Navbar auth={auth}/>
       <main>
         {
           auth ?
           <UserRouter/>
           :
-          <AuthRouter setAuth={setAuth}/>
+          <AuthRouter/>
         }
       </main>
       <Footer/>

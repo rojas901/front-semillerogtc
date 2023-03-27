@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import Swal from 'sweetalert2'
 import { loginService } from '../services/authServices'
 
-const Login = ({setAuth}) => {
+const Login = () => {
   const [user, setUser] = useState({
     email: "",
     password: ""
